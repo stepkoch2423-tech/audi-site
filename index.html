@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Audi — технологии, которые чувствуешь." />
+  <title>Audi — Vorsprung durch Technik</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #11120f;
+      --night: #181a16;
+      --paper: #f3f1ea;
+      --muted: #9a9c91;
+      --line: rgba(243, 241, 234, .16);
+      --lime: #d7f96f;
+      --lime-dark: #bddd57;
+      --warm: #e3dfd1;
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 83% 3%, rgba(215,249,111,.1), transparent 23%), var(--ink);
+      color: var(--paper);
+      font-family: 'Manrope', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    .shell { width: min(1240px, calc(100% - 64px)); margin: 0 auto; }
+    .eyebrow, .mono { font-family: 'DM Mono', monospace; letter-spacing: .08em; text-transform: uppercase; }
+    .eyebrow { font-size: 11px; color: var(--muted); }
+    .dot { width: 7px; height: 7px; display: inline-block; background: var(--lime); border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
+
+    header {
+      height: 84px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--line); position: relative; z-index: 3;
+    }
+    .brand { display: flex; align-items: center; gap: 13px; font-size: 19px; font-weight: 800; letter-spacing: -.08em; }
+    .brand-rings { display: flex; gap: -4px; }
+    .brand-rings i { display: block; width: 17px; height: 17px; border: 2px solid var(--paper); border-radius: 50%; margin-left: -4px; }
+    .brand-rings i:first-child { margin-left: 0; }
+    nav { display: flex; gap: 31px; color: #babbb2; font-size: 13px; }
+    nav a { transition: color .2s ease; }
+    nav a:hover, nav a.active { color: var(--paper); }
+    .header-cta, .outline-button {
+      border: 1px solid var(--line); background: transparent; color: var(--paper); padding: 12px 17px;
+      border-radius: 100px; cursor: pointer; font-size: 12px; transition: all .2s ease;
+    }
+    .header-cta:hover, .outline-button:hover { border-color: var(--lime); color: var(--lime); }
+    .menu-button { display: none; border: 0; background: transparent; color: var(--paper); font-size: 22px; }
+
+    .hero { min-height: 640px; display: grid; grid-template-columns: .82fr 1.18fr; align-items: center; gap: 30px; padding: 58px 0 74px; }
+    .hero-copy { position: relative; z-index: 1; }
+    .hero h1 { font-size: clamp(55px, 8vw, 105px); line-height: .88; letter-spacing: -.1em; margin: 23px 0 29px; max-width: 610px; }
+    .hero h1 span { color: var(--lime); }
+    .hero-intro { color: #b8b9af; line-height: 1.7; font-size: 14px; max-width: 370px; margin: 0 0 34px; }
+    .primary-button { display: inline-flex; align-items: center; gap: 18px; background: var(--lime); color: var(--ink); padding: 14px 17px 14px 20px; border-radius: 100px; border: 0; cursor: pointer; font-weight: 800; font-size: 12px; transition: background .2s ease, transform .2s ease; }
+    .primary-button:hover { background: #efffae; transform: translateY(-2px); }
+    .arrow-circle { display: grid; place-items: center; width: 23px; height: 23px; border-radius: 50%; background: var(--ink); color: var(--lime); font-size: 14px; }
+    .hero-visual { min-height: 505px; position: relative; display: grid; place-items: center; }
+    .hero-visual::before { content: ''; position: absolute; inset: 12% 2% 5% 7%; background: radial-gradient(ellipse, rgba(215, 249, 111, .27), rgba(215, 249, 111, 0) 67%); filter: blur(10px); }
+    .hero-image { width: 100%; height: 500px; object-fit: cover; border-radius: 0 0 0 120px; filter: saturate(.83) contrast(1.05); position: relative; z-index: 1; clip-path: polygon(12% 0, 100% 0, 100% 91%, 87% 100%, 0 100%, 0 15%); }
+    .hero-tag { position: absolute; z-index: 2; right: 0; top: 13%; color: var(--ink); background: var(--lime); padding: 13px 16px; font-family: 'DM Mono', monospace; font-size: 10px; transform: rotate(5deg); }
+    .hero-index { position: absolute; left: 5px; bottom: 15px; z-index: 2; font-size: 11px; color: var(--muted); }
+    .hero-index strong { color: var(--paper); font-size: 23px; font-weight: 500; }
+
+    .ticker { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); overflow: hidden; white-space: nowrap; }
+    .ticker-track { display: inline-flex; gap: 38px; padding: 18px 0; color: #c4c4bc; font-size: 11px; animation: move 28s linear infinite; }
+    .ticker-track span:nth-child(odd) { color: var(--lime); }
+    @keyframes move { to { transform: translateX(-33%); } }
+
+    section { padding: 105px 0; scroll-margin-top: 30px; }
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .75s ease, transform .75s cubic-bezier(.2,.75,.25,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .gradient-section { background: linear-gradient(135deg, #171913 0%, #27301d 44%, #151713 100%); position: relative; overflow: hidden; }
+    .gradient-section::before { content: ''; position: absolute; width: 520px; height: 520px; right: -190px; top: -160px; border-radius: 50%; background: rgba(215,249,111,.13); filter: blur(80px); pointer-events: none; }
+    .gradient-section > .shell, .gradient-section > .section-head, .gradient-section > .models-grid { position: relative; z-index: 1; }
+    .section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 42px; }
+    .section-title { font-size: clamp(36px, 5vw, 62px); line-height: .98; letter-spacing: -.08em; margin: 13px 0 0; max-width: 610px; }
+    .section-note { color: var(--muted); font-size: 13px; line-height: 1.65; max-width: 225px; }
+
+    .models-grid { display: grid; grid-template-columns: 1.28fr .72fr; gap: 16px; }
+    .model-card { border-radius: var(--radius); overflow: hidden; min-height: 450px; position: relative; background: #2a2c27; cursor: pointer; box-shadow: 0 18px 60px rgba(0,0,0,.18); }
+    .model-card.large { min-height: 600px; }
+    .model-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+    .model-card:hover img { transform: scale(1.04); }
+    .model-card:hover .model-arrow { background: var(--lime); color: var(--ink); border-color: var(--lime); transform: rotate(45deg); }
+    .model-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 38%, rgba(8, 9, 7, .88) 100%); pointer-events: none; }
+    .model-info { position: absolute; bottom: 28px; left: 30px; right: 30px; z-index: 1; display: flex; justify-content: space-between; align-items: end; }
+    .model-info h3 { font-size: 31px; letter-spacing: -.07em; margin: 8px 0 0; }
+    .model-info p { color: #d1d1c6; font-size: 12px; margin: 0; }
+    .model-arrow { width: 43px; height: 43px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.35); font-size: 20px; transition: all .3s ease; }
+
+    .stats-section { background: var(--paper); color: var(--ink); }
+    .stats-section .eyebrow, .stats-section .section-note { color: #77786f; }
+    .stats-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 80px; align-items: start; }
+    .stats-section .section-title { max-width: 390px; }
+    .stats-list { border-top: 1px solid rgba(17,18,15,.25); }
+    .stat-row { min-height: 84px; display: grid; grid-template-columns: 1fr 1.1fr .45fr; align-items: center; border-bottom: 1px solid rgba(17,18,15,.18); transition: background .25s ease, padding .25s ease; }
+    .stat-row:hover { background: rgba(215,249,111,.15); padding: 0 12px; }
+    .stat-label { color: #77786f; font-size: 12px; }
+    .stat-value { font-size: 31px; letter-spacing: -.07em; }
+    .stat-unit { font-family: 'DM Mono', monospace; font-size: 11px; color: #77786f; }
+    .stats-select { color: var(--ink); border: 1px solid rgba(17,18,15,.22); background: transparent; padding: 12px 15px; border-radius: 100px; cursor: pointer; font-size: 12px; margin-top: 31px; }
+
+    .tech-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .tech-panel { min-height: 408px; border-radius: var(--radius); padding: 32px; position: relative; overflow: hidden; background: #252721; }
+    .tech-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .72; }
+    .tech-panel::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,11,9,.9), rgba(10,11,9,.14)); }
+    .tech-copy { position: relative; z-index: 1; max-width: 250px; }
+    .tech-copy h3 { font-size: 28px; letter-spacing: -.07em; line-height: 1; margin: 19px 0 16px; }
+    .tech-copy p { color: #bfc0b5; font-size: 12px; line-height: 1.7; }
+    .tech-number { position: absolute; z-index: 1; bottom: 26px; right: 28px; font-size: 52px; letter-spacing: -.1em; color: var(--lime); }
+    .tech-side { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .mini-card { min-height: 196px; background: var(--warm); color: var(--ink); border-radius: var(--radius); padding: 27px; display: flex; flex-direction: column; justify-content: space-between; }
+    .mini-card.dark { color: var(--paper); background: var(--lime); }
+    .mini-card.dark .eyebrow { color: rgba(17,18,15,.65); }
+    .mini-card .big { font-size: 42px; letter-spacing: -.1em; line-height: 1; }
+    .mini-card p { margin: 0; font-size: 12px; max-width: 120px; line-height: 1.4; }
+    .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .gallery-card { min-height: 285px; border-radius: var(--radius); overflow: hidden; position: relative; background: #242620; cursor: pointer; }
+    .gallery-card.wide { grid-column: span 2; }
+    .gallery-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease, filter .6s ease; filter: saturate(.72); }
+    .gallery-card:hover img { transform: scale(1.08); filter: saturate(1.1); }
+    .gallery-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 34%, rgba(7,8,6,.82)); pointer-events: none; }
+    .gallery-caption { position: absolute; z-index: 1; bottom: 19px; left: 22px; right: 22px; display: flex; justify-content: space-between; align-items: end; }
+    .gallery-caption h3 { font-size: 23px; letter-spacing: -.07em; margin: 7px 0 0; }
+    .gallery-caption .eyebrow { color: #d8d9cf; }
+    .gallery-pill { border: 1px solid rgba(255,255,255,.45); border-radius: 50%; width: 34px; height: 34px; display: grid; place-items: center; font-size: 16px; transition: all .3s ease; }
+    .gallery-card:hover .gallery-pill { background: var(--lime); color: var(--ink); border-color: var(--lime); }
+
+    .quote { padding: 105px 0 120px; border-top: 1px solid var(--line); text-align: center; }
+    .quote blockquote { font-size: clamp(34px, 5.5vw, 71px); line-height: .98; letter-spacing: -.09em; max-width: 920px; margin: 22px auto 32px; }
+    .quote blockquote span { color: var(--lime); }
+    footer { padding: 28px 0 40px; display: flex; justify-content: space-between; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    .footer-brand { color: var(--paper); font-weight: 800; letter-spacing: -.06em; }
+
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 100px); background: var(--lime); color: var(--ink); padding: 13px 18px; border-radius: 100px; font-size: 12px; font-weight: 700; transition: transform .3s ease; z-index: 10; }
+    .toast.show { transform: translate(-50%, 0); }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 36px, 550px); }
+      header { height: 70px; }
+      nav, .header-cta { display: none; }
+      .menu-button { display: block; }
+      .hero { grid-template-columns: 1fr; padding: 62px 0 74px; }
+      .hero h1 { font-size: clamp(58px, 18vw, 92px); }
+      .hero-visual { min-height: 330px; margin-top: 16px; }
+      .hero-image { height: 330px; border-radius: 0 0 0 75px; }
+      .hero-tag { right: 5px; top: 7%; }
+      section { padding: 76px 0; }
+      .section-head { display: block; margin-bottom: 28px; }
+      .section-note { margin-top: 22px; }
+      .models-grid, .stats-layout, .tech-layout { grid-template-columns: 1fr; gap: 14px; }
+      .model-card.large, .model-card { min-height: 390px; }
+      .stats-layout { gap: 40px; }
+      .stat-row { grid-template-columns: 1fr 1fr .22fr; min-height: 84px; }
+      .stat-value { font-size: 26px; }
+      .tech-panel { min-height: 360px; }
+      .tech-side { grid-template-columns: 1fr 1fr; }
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+      .gallery-card { min-height: 230px; }
+      .gallery-card.wide { grid-column: span 2; }
+      .quote { padding: 80px 0; }
+      footer { display: block; line-height: 2; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="#top" aria-label="Audi home">
+        <span class="brand-rings" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>AUDI</span>
+      </a>
+      <nav aria-label="Основная навигация">
+        <a class="active" href="#models">Модели</a>
+        <a href="#technology">Технологии</a>
+        <a href="#heritage">Наследие</a>
+      </nav>
+      <a class="header-cta" href="#models">Конфигуратор ↗</a>
+      <button class="menu-button" aria-label="Открыть меню">☰</button>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="dot"></span>Vorsprung durch Technik</div>
+          <h1>Движение<br>в <span>новом</span><br>измерении.</h1>
+          <p class="hero-intro">Audi соединяет выразительный дизайн, интеллектуальные технологии и чистую эмоцию движения.</p>
+          <a class="primary-button" href="#models">Выбрать свою Audi <span class="arrow-circle">↗</span></a>
+        </div>
+        <div class="hero-visual">
+          <img class="hero-image" src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1400&q=85" alt="Темный спортивный автомобиль Audi на дороге" />
+          <div class="hero-tag">THE NEW A6 e-tron</div>
+          <div class="hero-index"><strong>01</strong> / 03</div>
+        </div>
+      </section>
+
+      <div class="ticker" aria-hidden="true"><div class="ticker-track">
+        <span>/// AUDI DESIGN</span><span>/// QUATTRO</span><span>/// E-TRON</span><span>/// PERFORMANCE</span><span>/// PROGRESS</span><span>/// AUDI DESIGN</span><span>/// QUATTRO</span><span>/// E-TRON</span><span>/// PERFORMANCE</span>
+      </div></div>
+
+      <section id="models" class="gradient-section">
+        <div class="section-head">
+          <div><div class="eyebrow"><span class="dot"></span>Линейка 2025</div><h2 class="section-title">Выбери свой<br>ритм.</h2></div>
+          <p class="section-note">От городской динамики до гран-туризмо. У каждой Audi — свой характер.</p>
+        </div>
+        <div class="models-grid">
+          <article class="model-card large" data-model="a5">
+            <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1400&q=85" alt="Серый спортивный седан" />
+            <div class="model-info"><div><div class="eyebrow">01 / Sportback</div><h3>A5</h3><p>Элегантность, которая ускоряется.</p></div><div class="model-arrow">↗</div></div>
+          </article>
+          <article class="model-card" data-model="q8">
+            <img src="https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=1000&q=85" alt="Черный внедорожник" />
+            <div class="model-info"><div><div class="eyebrow">02 / SUV</div><h3>Q8</h3><p>Простор без компромиссов.</p></div><div class="model-arrow">↗</div></div>
+          </article>
+        </div>
+        <div class="gallery" style="margin-top:16px">
+          <article class="gallery-card wide reveal" data-model="a6"><img src="https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&w=1200&q=85" alt="Темный Audi A6 e-tron" /><div class="gallery-caption"><div><div class="eyebrow">03 / e-tron</div><h3>A6 e-tron</h3></div><div class="gallery-pill">↗</div></div></article>
+          <article class="gallery-card reveal" data-model="rs6"><img src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&w=900&q=85" alt="Спортивный Audi RS6 Avant" /><div class="gallery-caption"><div><div class="eyebrow">04 / Avant</div><h3>RS 6</h3></div><div class="gallery-pill">↗</div></div></article>
+          <article class="gallery-card reveal" data-model="q4"><img src="https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=900&q=85" alt="Белый Audi Q4 e-tron" /><div class="gallery-caption"><div><div class="eyebrow">05 / Electric SUV</div><h3>Q4 e-tron</h3></div><div class="gallery-pill">↗</div></div></article>
+          <article class="gallery-card wide reveal" data-model="r8"><img src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=1200&q=85" alt="Красный спортивный автомобиль Audi R8" /><div class="gallery-caption"><div><div class="eyebrow">06 / Icon</div><h3>R8</h3></div><div class="gallery-pill">↗</div></div></article>
+        </div>
+      </section>
+
+      <section class="stats-section" id="technology">
+        <div class="shell">
+          <div class="stats-layout">
+            <div>
+              <div class="eyebrow">01 — Измеримые эмоции</div>
+              <h2 class="section-title">Цифры,<br>которые<br>чувствуешь.</h2>
+              <p class="section-note">Выбери модель, чтобы увидеть ключевые показатели.</p>
+              <select class="stats-select" id="modelSelect" aria-label="Выбор модели"><option value="a5">Audi A5 Sportback</option><option value="q8">Audi Q8</option><option value="rs6">Audi RS 6 Avant</option><option value="a6">Audi A6 e-tron</option><option value="q4">Audi Q4 e-tron</option><option value="r8">Audi R8</option></select>
+            </div>
+            <div class="stats-list" id="statsList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="heritage">
+        <div class="section-head"><div><div class="eyebrow"><span class="dot"></span>Философия Audi</div><h2 class="section-title">Инженерия<br>с характером.</h2></div><p class="section-note">Технологии становятся настоящими, когда освобождают место для впечатлений.</p></div>
+        <div class="tech-layout">
+          <article class="tech-panel"><img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1200&q=85" alt="Фара автомобиля в темноте" /><div class="tech-copy"><div class="eyebrow">01 — Свет</div><h3>Матрица,<br>которая видит<br>больше.</h3><p>Адаптивная оптика превращает каждый маршрут в собственную световую сцену.</p></div><div class="tech-number">01</div></article>
+          <div class="tech-side"><article class="mini-card"><div class="eyebrow">02 — Привод</div><div class="big">quattro<span style="color:#85877e">®</span></div><p>Уверенность в каждом повороте.</p></article><article class="mini-card dark"><div class="eyebrow">03 — Future</div><div class="big">e-tron</div><p>Тишина, у которой есть характер.</p></article></div>
+        </div>
+      </section>
+
+      <section class="quote"><div class="eyebrow"><span class="dot"></span>С 1909 года</div><blockquote>«Прогресс — это не пункт назначения.<br>Это <span>способ двигаться.</span>»</blockquote><a class="outline-button" href="#top">Вернуться наверх ↑</a></section>
+    </main>
+
+    <footer><span class="footer-brand">AUDI — Vorsprung durch Technik</span><span>© 2025 Audi AG · Сделано для движения</span></footer>
+  </div>
+  <div class="toast" id="toast" role="status">Конфигуратор открыт — выбери свою модель</div>
+  <script>
+    const data = {
+      a5: { power: ['265', 'л.с.'], speed: ['5.9', 'сек. 0–100'], drive: ['quattro', 'полный привод'], range: ['720', 'км запас хода'], torque: ['370', 'Н·м'], vmax: ['250', 'км/ч'], volume: ['1 300', 'л. багажник'], weight: ['1 735', 'кг масса'] },
+      q8: { power: ['340', 'л.с.'], speed: ['5.6', 'сек. 0–100'], drive: ['quattro', 'полный привод'], range: ['810', 'км запас хода'], torque: ['500', 'Н·м'], vmax: ['250', 'км/ч'], volume: ['1 755', 'л. багажник'], weight: ['2 150', 'кг масса'] },
+      rs6: { power: ['630', 'л.с.'], speed: ['3.4', 'сек. 0–100'], drive: ['quattro', 'performance'], range: ['650', 'км запас хода'], torque: ['850', 'Н·м'], vmax: ['305', 'км/ч'], volume: ['1 680', 'л. багажник'], weight: ['2 075', 'кг масса'] },
+      a6: { power: ['381', 'л.с.'], speed: ['5.4', 'сек. 0–100'], drive: ['e-quattro', 'электропривод'], range: ['750', 'км запас хода'], torque: ['855', 'Н·м'], vmax: ['240', 'км/ч'], volume: ['502', 'л. багажник'], weight: ['2 175', 'кг масса'] },
+      q4: { power: ['286', 'л.с.'], speed: ['6.7', 'сек. 0–100'], drive: ['RWD', 'задний привод'], range: ['520', 'км запас хода'], torque: ['545', 'Н·м'], vmax: ['180', 'км/ч'], volume: ['1 490', 'л. багажник'], weight: ['2 125', 'кг масса'] },
+      r8: { power: ['620', 'л.с.'], speed: ['3.1', 'сек. 0–100'], drive: ['quattro', 'полный привод'], range: ['—', 'атмосферный V10'], torque: ['580', 'Н·м'], vmax: ['331', 'км/ч'], volume: ['226', 'л. багажник'], weight: ['1 595', 'кг масса'] }
+    };
+    const statsList = document.querySelector('#statsList');
+    const select = document.querySelector('#modelSelect');
+    const toast = document.querySelector('#toast');
+    function renderStats(model) {
+      statsList.innerHTML = Object.values(data[model]).map(([value, label], i) => `<div class="stat-row"><span class="stat-label">${['Мощность','Разгон','Привод','Дальность','Крутящий момент','Макс. скорость','Багажник','Снаряженная масса'][i]}</span><span class="stat-value">${value}</span><span class="stat-unit">${label}</span></div>`).join('');
+    }
+    renderStats('a5');
+    select.addEventListener('change', e => renderStats(e.target.value));
+    document.querySelectorAll('.model-card, .gallery-card').forEach(card => card.addEventListener('click', () => { select.value = card.dataset.model; renderStats(card.dataset.model); document.querySelector('#technology').scrollIntoView({behavior:'smooth'}); }));
+    document.querySelector('.header-cta').addEventListener('click', () => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2800); });
+    document.querySelector('.menu-button').addEventListener('click', () => { const nav = document.querySelector('nav'); const open = nav.style.display === 'flex'; nav.style.display = open ? '' : 'flex'; nav.style.position = 'absolute'; nav.style.top = '69px'; nav.style.left = '0'; nav.style.right = '0'; nav.style.padding = '20px'; nav.style.background = 'var(--ink)'; nav.style.flexDirection = 'column'; nav.style.gap = '17px'; });
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }), {threshold: .12});
+    document.querySelectorAll('.reveal, .model-card, .stats-layout, .tech-panel, .mini-card, .quote').forEach((el, i) => { el.classList.add('reveal'); el.style.transitionDelay = `${(i % 4) * 70}ms`; observer.observe(el); });
+  </script>
+</body>
+</html>
