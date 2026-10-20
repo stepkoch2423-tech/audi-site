@@ -67,6 +67,8 @@
     .hero-visual { min-height: 505px; position: relative; display: grid; place-items: center; }
     .hero-visual::before { content: ''; position: absolute; inset: 12% 2% 5% 7%; background: radial-gradient(ellipse, rgba(215, 249, 111, .27), rgba(215, 249, 111, 0) 67%); filter: blur(10px); }
     .hero-image { width: 100%; height: 500px; object-fit: cover; border-radius: 0 0 0 120px; filter: saturate(.83) contrast(1.05); position: relative; z-index: 1; clip-path: polygon(12% 0, 100% 0, 100% 91%, 87% 100%, 0 100%, 0 15%); }
+    .hero-visual.image-fallback { background: radial-gradient(ellipse at 58% 54%, rgba(215,249,111,.35), transparent 29%), linear-gradient(135deg, #30392b, #10120e 68%); border-radius: 0 0 0 120px; clip-path: polygon(12% 0, 100% 0, 100% 91%, 87% 100%, 0 100%, 0 15%); }
+    .hero-visual.image-fallback::after { content: 'AUDI / DESIGN STUDY'; position: absolute; z-index: 1; left: 14%; bottom: 17%; color: rgba(243,241,234,.55); font: 11px 'DM Mono', monospace; letter-spacing: .12em; }
     .hero-tag { position: absolute; z-index: 2; right: 0; top: 13%; color: var(--ink); background: var(--lime); padding: 13px 16px; font-family: 'DM Mono', monospace; font-size: 10px; transform: rotate(5deg); }
     .hero-index { position: absolute; left: 5px; bottom: 15px; z-index: 2; font-size: 11px; color: var(--muted); }
     .hero-index strong { color: var(--paper); font-size: 23px; font-weight: 500; }
@@ -90,6 +92,9 @@
     .model-card { border-radius: var(--radius); overflow: hidden; min-height: 450px; position: relative; background: #2a2c27; cursor: pointer; box-shadow: 0 18px 60px rgba(0,0,0,.18); }
     .model-card.large { min-height: 600px; }
     .model-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+    .model-card.image-fallback { background: linear-gradient(140deg, #485143, #11130f 68%); }
+    .model-card.image-fallback:nth-child(2) { background: linear-gradient(140deg, #5c5c55, #151713 68%); }
+    .image-fallback img { display: none; }
     .model-card:hover img { transform: scale(1.04); }
     .model-card:hover .model-arrow { background: var(--lime); color: var(--ink); border-color: var(--lime); transform: rotate(45deg); }
     .model-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 38%, rgba(8, 9, 7, .88) 100%); pointer-events: none; }
@@ -113,6 +118,7 @@
     .tech-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .tech-panel { min-height: 408px; border-radius: var(--radius); padding: 32px; position: relative; overflow: hidden; background: #252721; }
     .tech-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .72; }
+    .tech-panel.image-fallback { background: radial-gradient(circle at 75% 35%, rgba(215,249,111,.4), transparent 24%), linear-gradient(135deg, #3b4434, #0b0d0a 72%); }
     .tech-panel::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,11,9,.9), rgba(10,11,9,.14)); }
     .tech-copy { position: relative; z-index: 1; max-width: 250px; }
     .tech-copy h3 { font-size: 28px; letter-spacing: -.07em; line-height: 1; margin: 19px 0 16px; }
@@ -128,6 +134,10 @@
     .gallery-card { min-height: 285px; border-radius: var(--radius); overflow: hidden; position: relative; background: #242620; cursor: pointer; }
     .gallery-card.wide { grid-column: span 2; }
     .gallery-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease, filter .6s ease; filter: saturate(.72); }
+    .gallery-card.image-fallback { background: linear-gradient(140deg, #3c4534, #121510 70%); }
+    .gallery-card:nth-child(2).image-fallback { background: linear-gradient(140deg, #514f47, #11130f 70%); }
+    .gallery-card:nth-child(3).image-fallback { background: linear-gradient(140deg, #777a6c, #1b2019 70%); }
+    .gallery-card:nth-child(4).image-fallback { background: linear-gradient(140deg, #631f21, #130f0e 70%); }
     .gallery-card:hover img { transform: scale(1.08); filter: saturate(1.1); }
     .gallery-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 34%, rgba(7,8,6,.82)); pointer-events: none; }
     .gallery-caption { position: absolute; z-index: 1; bottom: 19px; left: 22px; right: 22px; display: flex; justify-content: space-between; align-items: end; }
@@ -278,6 +288,7 @@
     document.querySelectorAll('.model-card, .gallery-card').forEach(card => card.addEventListener('click', () => { select.value = card.dataset.model; renderStats(card.dataset.model); document.querySelector('#technology').scrollIntoView({behavior:'smooth'}); }));
     document.querySelector('.header-cta').addEventListener('click', () => { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2800); });
     document.querySelector('.menu-button').addEventListener('click', () => { const nav = document.querySelector('nav'); const open = nav.style.display === 'flex'; nav.style.display = open ? '' : 'flex'; nav.style.position = 'absolute'; nav.style.top = '69px'; nav.style.left = '0'; nav.style.right = '0'; nav.style.padding = '20px'; nav.style.background = 'var(--ink)'; nav.style.flexDirection = 'column'; nav.style.gap = '17px'; });
+    document.querySelectorAll('img').forEach(img => img.addEventListener('error', () => { img.parentElement.classList.add('image-fallback'); img.alt = ''; }));
     const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }), {threshold: .12});
     document.querySelectorAll('.reveal, .model-card, .stats-layout, .tech-panel, .mini-card, .quote').forEach((el, i) => { el.classList.add('reveal'); el.style.transitionDelay = `${(i % 4) * 70}ms`; observer.observe(el); });
   </script>
